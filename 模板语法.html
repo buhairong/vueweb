@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+    <style>
+        #app1{
+            width:200px;
+            height:200px;
+            border:1px solid #000000;
+        }
+        #app2{
+            width:100px;
+            height:100px;
+            border:1px solid #000000;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!--
+            事件后跟.prevent：阻止元素默认事件
+            事件后跟.stop：取消冒泡
+            也可以串联：如 v-on:click.prevent.stop
+        -->
+        <div id="app1" v-on:click.prevent="reverseMessage1">
+            <div id="app2" @click.stop="reverseMessage2">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="app5"></div>
+
+    <div id="app6">
+        <span>Message: {{ msg }}</span>
+        <span v-once>这个将不会改变: {{ msg1 }}<span>Message: {{ msg2 }}</span></span>
+        <p>Using mustaches: {{ rawHtml }}</p>
+        <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+    </div>
+</body>
+</html>
+<script>
+    var app1 = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue.js!'
+        },
+        methods: {
+            reverseMessage1: function () {
+                alert(1);
+            },
+            reverseMessage2: function () {
+                alert(2);
+            }
+        }
+    });
+
+    var app5 = new Vue({
+        el: '#app5',
+        data: {
+            message: 'Hello Vue.js!'
+        },
+        methods: {
+            reverseMessage5: function () {
+                alert(5);
+            }
+        }
+    });
+
+    var app6 = new Vue({
+        el: '#app6',
+        data: {
+            msg: 'Hello Vue.js!',
+            msg1: 'Hello Vue.js!',
+            msg2: 'Hello Vue.js!',
+            rawHtml:"<span style='color:red;'>this should be red</span>"
+        }
+    });
+
+    app6.msg="msg is changed";
+    app6.msg1="msg1 is changed";
+    app6.msg2="msg2 is changed";
+
+
+</script>

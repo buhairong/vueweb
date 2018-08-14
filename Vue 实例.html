@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+</body>
+</html>
+<script>
+    var data = { a: 1 }
+    var vm = new Vue({
+        el: '#example',
+        data: data
+    })
+
+    vm.$data === data // => true
+    vm.$el === document.getElementById('example') // => true
+
+    // $watch 是一个实例方法
+    vm.$watch('a', function (newValue, oldValue) {
+        // 这个回调将在 `vm.a` 改变后调用
+        console.log("newValue="+newValue);
+        console.log("oldValue="+oldValue);
+    })
+
+    var vm1 = new Vue({
+        data: {
+            a: 1,
+            created1: function () {
+                // `this` 指向 vm 实例
+                console.log('a1 is: ' + this.a)
+            }
+        },
+        created: function () {
+            // `this` 指向 vm 实例
+            console.log('a is: ' + this.a);
+            this.created1();
+            this.created2();
+        },
+        methods: {
+            created2: function () {
+                // `this` 指向 vm 实例
+                console.log('a2 is: ' + this.a);
+            }
+        }
+
+    })
+
+    vm1.created2();
+</script>
